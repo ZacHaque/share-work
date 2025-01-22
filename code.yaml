@@ -1,4 +1,5 @@
-1. Create bucket with below policy
+1. Create bucket with below policy eg `testing-bucket-198237187239`
+
 # Bucket Policy
 
 {
@@ -7,7 +8,7 @@
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::286386330048:role/test-s3-pete-iam-role"
+        "AWS": "arn:aws:iam::123456789123:role/test-bucket-iam-role"
       },
       "Action": [
         "s3:GetObject",
@@ -15,8 +16,8 @@
         "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::test-iam-permission-zac-pete",
-        "arn:aws:s3:::test-iam-permission-zac-pete/*"
+        "arn:aws:s3:::testing-bucket-198237187239",
+        "arn:aws:s3:::testing-bucket-198237187239/*"
       ]
     }
   ]
@@ -36,8 +37,8 @@
         "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::test-iam-permission-zac-pete",
-        "arn:aws:s3:::test-iam-permission-zac-pete/*"
+        "arn:aws:s3:::testing-bucket-198237187239",
+        "arn:aws:s3:::testing-bucket-198237187239/*"
       ]
     }
   ]
@@ -55,7 +56,7 @@
         {
             "Effect": "Allow",
             "Action": "sts:AssumeRole",
-            "Resource": "arn:aws:iam::286386330048:role/test-s3-pete-iam-role"
+            "Resource": "arn:aws:iam::123456789123:role/test-bucket-iam-role"
         }
     ]
 }
@@ -65,7 +66,7 @@
 
 # Run following 
 aws sts assume-role \
-    --role-arn "arn:aws:iam::286386330048:role/test-s3-pete-iam-role" \
+    --role-arn "arn:aws:iam::123456789123:role/test-bucket-iam-role" \
     --role-session-name "SameAccountSession"
 
 # Fill below from output of above command
@@ -75,7 +76,7 @@ export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 export AWS_SESSION_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxWRBajZ9yraUNQMsFfIjXXXXXXXXXXXXX
 
 # Run cli command to check
-aws s3 ls s3://test-iam-permission-zac-pete/
+aws s3 ls s3://testing-bucket-198237187239/
 
 
 
