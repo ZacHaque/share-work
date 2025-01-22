@@ -1,5 +1,5 @@
-
-#Bucket Policy
+1. Create bucket with below policy
+# Bucket Policy
 
 {
   "Version": "2012-10-17",
@@ -7,7 +7,7 @@
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::123456789012:role/YourSpecificRoleName"
+        "AWS": "arn:aws:iam::286386330048:role/test-s3-pete-iam-role"
       },
       "Action": [
         "s3:GetObject",
@@ -15,15 +15,14 @@
         "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::your-bucket-name",
-        "arn:aws:s3:::your-bucket-name/*"
+        "arn:aws:s3:::test-iam-permission-zac-pete",
+        "arn:aws:s3:::test-iam-permission-zac-pete/*"
       ]
     }
   ]
 }
 
-
-
+2. Create a IAM policy
 # IAM policy
 
 {
@@ -37,9 +36,47 @@
         "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::your-bucket-name",
-        "arn:aws:s3:::your-bucket-name/*"
+        "arn:aws:s3:::test-iam-permission-zac-pete",
+        "arn:aws:s3:::test-iam-permission-zac-pete/*"
       ]
     }
   ]
 }
+
+3. Create a IAM role attach above policy
+4. Create a trust relationship policy so only a particular AWS User can assume it (enhanced security)
+5. Create a AWS user with cli access , note AWS access key and secret access key
+6. Add following policy so this user can assume the role created on step 3
+
+# Assume role policy for user
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "arn:aws:iam::286386330048:role/test-s3-pete-iam-role"
+        }
+    ]
+}
+
+
+# Lets test if above works
+
+# Run following 
+aws sts assume-role \
+    --role-arn "arn:aws:iam::286386330048:role/test-s3-pete-iam-role" \
+    --role-session-name "SameAccountSession"
+
+# Fill below from output of above command
+
+export AWS_ACCESS_KEY_ID=XXXXXXXXXXX
+export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+export AWS_SESSION_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxWRBajZ9yraUNQMsFfIjXXXXXXXXXXXXX
+
+# Run cli command to check
+aws s3 ls s3://test-iam-permission-zac-pete/
+
+
+
+
