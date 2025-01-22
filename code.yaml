@@ -46,7 +46,22 @@
 
 3. Create a IAM role attach above policy
 4. Create a trust relationship policy so only a particular AWS User can assume it (enhanced security)
-5. Create a AWS user with cli access , note AWS access key and secret access key
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::123456789012:user/bob"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
+
+5. Create a AWS user eg "bob" with cli access , note AWS access key and secret access key
 6. Add following policy so this user can assume the role created on step 3
 
 # Assume role policy for user
