@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: local-helm-appset
+spec:
+  generators:
+  - list:
+      elements:
+      - planet: myapp1-z
+        value: myapp1
+      - planet: myapp2-z
+        value: myapp2
+      # - planet: mars-env
+      #   value: mars
+      # - planet: neptune-env
+      #   value: neptune
+      # - planet: neptune-env
+      #   value: neptune
+  template:
+    metadata:
+      name: '{{planet}}-app'
+    spec:
+      project: default
+      sources:
+      - repoURL: 'https://gitlab.cloudgypsy.com.au/nocred/demo-chart-app'
+        # chart: demo-chart-app
+        path: ./
+        targetRevision: 'HEAD'
+        helm:
+          valueFiles:
+          - $values/helm-values/{{value}}.yaml
+      - repoURL: 'https://gitlab.cloudgypsy.com.au/nocred/demo-applicationset'
+        targetRevision: main
+        ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: dagster
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

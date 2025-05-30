@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dagster-server
+  namespace: argo
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+  - repoURL: https://dagster-io.github.io/helm
+    chart: dagster
+    targetRevision: '1.9.2'
+    helm:
+      valueFiles:
+      - $values/helm-values/dagster-server.yaml
+  - repoURL: 'https://gitlab.cloudgypsy.com.au/nocred/demo-applicationset'
+    targetRevision: main
+    ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dagster
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
