@@ -1,0 +1,13 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Schema
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"platform.confluent.io/v1beta1","kind":"Schema","metadata":{"annotations":{},"name":"user-schema","namespace":"confluent-prod"},"spec":{"format":"avro","schemaRegistry":{"url":"http://dev-schema-registry.confluent:8081"},"subject":"user"}}
+  name: user-schema
+  namespace: confluent-prod
+spec:
+  format: avro
+  schemaRegistry:
+    url: http://dev-schema-registry.confluent:8081
+  subject: user

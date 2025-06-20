@@ -1,2 +1,2 @@
 resources:
-  - kafka-schema-crd.yaml
+  - schema-product.yaml
