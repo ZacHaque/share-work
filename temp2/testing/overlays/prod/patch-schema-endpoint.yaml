@@ -1,0 +1,7 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Schema
+metadata:
+  name: user-schema
+spec:
+  schemaRegistry:
+    url: http://prod-schema-registry.confluent:8081

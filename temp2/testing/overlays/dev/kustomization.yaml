@@ -1,0 +1,7 @@
+resources:
+  - ../../base
+
+namespace: confluent-dev
+
+patchesStrategicMerge:
+  - patch-schema-endpoint.yaml

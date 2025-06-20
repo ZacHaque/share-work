@@ -1,0 +1,19 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Schema
+metadata:
+  name: user-schema
+  # namespace: confluent
+spec:
+  schema: |
+    {
+      "type": "record",
+      "name": "User",
+      "fields": [
+        {"name": "name", "type": "string"},
+        {"name": "age", "type": "int"}
+      ]
+    }
+  subject: users
+  format: avro
+  schemaRegistry:
+    url: http://placeholder-schema-registry:8081
